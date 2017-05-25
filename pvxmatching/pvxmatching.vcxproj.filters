@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\fvc">
+      <UniqueIdentifier>{de37c3fa-bd7f-4ffa-9362-80252a18f868}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\naive">
+      <UniqueIdentifier>{ca8ac10b-9899-422d-beb2-4a50320cbdb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\utils">
+      <UniqueIdentifier>{ba209b82-85d5-41f0-ab65-7891c2555d66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\fvc">
+      <UniqueIdentifier>{b1cac131-1dba-47ab-9233-1221aac97d87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\naive">
+      <UniqueIdentifier>{eb40eb1d-7611-4482-a37f-9378487d7cb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\utils">
+      <UniqueIdentifier>{026dfbae-240d-4606-97cf-67430a824961}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\pvc">
+      <UniqueIdentifier>{590ef3b5-af13-4f0a-8aaf-6f71ec0a3204}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\pvc">
+      <UniqueIdentifier>{9dbca981-c0d5-4c81-b9a8-5c09fa65a497}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="utils\rbitmap.cpp">
+      <Filter>ソース ファイル\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\sbitmap.cpp">
+      <Filter>ソース ファイル\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="pvc\kjgraph.cpp">
+      <Filter>ソース ファイル\pvc</Filter>
+    </ClCompile>
+    <ClCompile Include="pvc\kmpbased.cpp">
+      <Filter>ソース ファイル\pvc</Filter>
+    </ClCompile>
+    <ClCompile Include="pvc\kshiftingcondition.cpp">
+      <Filter>ソース ファイル\pvc</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\tbitmap.cpp">
+      <Filter>ソース ファイル\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="fvc\kjgraph.cpp">
+      <Filter>ソース ファイル\fvc</Filter>
+    </ClCompile>
+    <ClCompile Include="fvc\kmpbased.cpp">
+      <Filter>ソース ファイル\fvc</Filter>
+    </ClCompile>
+    <ClCompile Include="fvc\kshiftingcondition.cpp">
+      <Filter>ソース ファイル\fvc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="fvc\kmpbased.hpp">
+      <Filter>ヘッダー ファイル\fvc</Filter>
+    </ClInclude>
+    <ClInclude Include="naive\fvcmatching.hpp">
+      <Filter>ヘッダー ファイル\naive</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\alphabet.hpp">
+      <Filter>ヘッダー ファイル\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\bitop.hpp">
+      <Filter>ヘッダー ファイル\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\pair.hpp">
+      <Filter>ヘッダー ファイル\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rbitmap.hpp">
+      <Filter>ヘッダー ファイル\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\sbitmap.hpp">
+      <Filter>ヘッダー ファイル\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\string.hpp">
+      <Filter>ヘッダー ファイル\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="fvc\kjgraph.hpp">
+      <Filter>ヘッダー ファイル\fvc</Filter>
+    </ClInclude>
+    <ClInclude Include="fvc\kshiftingcondition.hpp">
+      <Filter>ヘッダー ファイル\fvc</Filter>
+    </ClInclude>
+    <ClInclude Include="pvc\kjgraph.hpp">
+      <Filter>ヘッダー ファイル\pvc</Filter>
+    </ClInclude>
+    <ClInclude Include="pvc\kmpbased.hpp">
+      <Filter>ヘッダー ファイル\pvc</Filter>
+    </ClInclude>
+    <ClInclude Include="pvc\kshiftingcondition.hpp">
+      <Filter>ヘッダー ファイル\pvc</Filter>
+    </ClInclude>
+    <ClInclude Include="naive\pvcmatching.hpp">
+      <Filter>ヘッダー ファイル\naive</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\injective_map.hpp">
+      <Filter>ヘッダー ファイル\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\tbitmap.hpp">
+      <Filter>ヘッダー ファイル\utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
