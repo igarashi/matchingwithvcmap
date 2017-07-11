@@ -5,90 +5,102 @@
 #include "kjgraph.hpp"
 
 namespace fvc {
-    bool KjGraph::addVCCondition(int var, int constant) {
-        auto exists = condition_VC.insert({var, constant});
-        if (!exists.second) {
-            return exists.first->second == constant;
-        }
-        return true;
-    }
 
-    bool KjGraph::addVCConditionRecursive(int var, int constant) {
-        auto rootSymbol = var;
-        auto varRoot = inversed_VV.find(var);
-        if (varRoot != inversed_VV.end())
-            rootSymbol = varRoot->second;
+	bool KjGraph::set_sigma(int var, int constant) {
+		// insert to parent if not exists
+		parent_.insert({ var, var });
+		auto x = sigma_.insert({ var, constant });
+		if (!x.second) {
+			return x.first->second == constant;
+		}
+		return true;
+	}
 
-        auto child = condition_VV.find(rootSymbol);
-        if (child != condition_VV.end()) {
-            for (auto childSymbol: child->second) {
-                if (!addVCCondition(childSymbol, constant))
-                    return false;
-                inversed_VV.erase(childSymbol);
-            }
-        }
+	int KjGraph::find_parent(int x) {
+		auto temp = parent_.insert({ x, x });
+		if (temp.second) {
+			// not inserted yet.
+			rank_.insert({ x, 0 });
+			return x;
+		} else {
+			// already inserted.
+			if (temp.first->second == x) {
+				return x;
+			} else {
+				return temp.first->second = find_parent(temp.first->second);
+			}
+		}
+	}
 
-        condition_VV.erase(rootSymbol);
-        return addVCCondition(rootSymbol, constant);
-    }
+	bool KjGraph::unite(int a, int b) {
+		auto x = find_parent(a);
+		auto y = find_parent(b);
 
-    bool KjGraph::addCondition(int a, int b) {
+		if (x == y) return true;
 
-        if (utils::alphabet::is_variable(a)) {
-            if (utils::alphabet::is_variable(b)) {
-                // join bRoot to children of aRoot
+		auto sigma_x = sigma_.find(x);
+		auto sigma_y = sigma_.find(y);
+		if (sigma_x != sigma_.end() && sigma_y != sigma_.end() && sigma_x->second != sigma_y->second) {
+			return false; // can't merge two connected components which have different sigma.
+		}
+
+		bool has_sigma = false;
+		int sigma_xy = 0;
+		if (sigma_x != sigma_.end()) {
+			has_sigma = true;
+			sigma_xy = sigma_x->second;
+		}
+		if (sigma_y != sigma_.end()) {
+			has_sigma = true;
+			sigma_xy = sigma_y->second;
+		}
+
+		if (rank_[x] < rank_[y]) {
+			parent_[x] = y;
+			if (has_sigma)
+				sigma_.insert({ x, sigma_xy });
+
+		} else {
+			parent_[y] = x;
+			if (has_sigma)
+				sigma_.insert({ y, sigma_xy });
+
+			if (rank_[x] == rank_[y]) rank_[x]++;
+		}
+		return true;
+	}
+
+	bool KjGraph::add_condition(int a, int b) {
+
+		if (utils::alphabet::is_variable(a)) {
+			if (utils::alphabet::is_variable(b)) {
+				// join bRoot to children of aRoot
 				if (a == b)
 					return true;
 
-                auto bRootSymbol = b;
-                auto bRoot = inversed_VV.find(b);
-                if (bRoot != inversed_VV.end())
-                    bRootSymbol = bRoot->second;
+				return unite(a, b);
+			} else {
+				// a: var, b: const
+				return set_sigma(a, b);
+			}
+		} else {
+			if (utils::alphabet::is_variable(b)) {
+				// a: const, b: var
+				return set_sigma(b, a);
+			} else {
+				// a: const, b: const
+				return (a == b);
+			}
+		}
+	}
 
-                auto aRootSymbol = a;
-                auto aRoot = inversed_VV.find(a);
-                if (aRoot != inversed_VV.end())
-                    aRootSymbol = aRoot->second;
+	const std::map<int, int>* KjGraph::get_condition() const {
+		return &parent_;
+	}
 
-				if (aRootSymbol == bRootSymbol)
-					return true;
-
-                auto nextRoot = condition_VV.insert({aRootSymbol, std::set<int>()});
-
-                auto bChild = condition_VV.find(bRootSymbol);
-                if (bChild != condition_VV.end()) {
-                    for (auto bChildSymbol: bChild->second) {
-                        nextRoot.first->second.insert(bChildSymbol);
-                        inversed_VV[bChildSymbol] = aRootSymbol;
-                    }
-                    condition_VV.erase(bChild);
-                }
-                inversed_VV[bRootSymbol] = aRootSymbol;
-                nextRoot.first->second.insert(bRootSymbol);
-
-                return true;
-            } else {
-                // a: var, b: const
-                return addVCConditionRecursive(a, b);
-            }
-        } else {
-            if (utils::alphabet::is_variable(b)) {
-                // a: const, b: var
-                return addVCConditionRecursive(b, a);
-            } else {
-                // a: const, b: const
-                return (a == b);
-            }
-        }
-    }
-
-    const std::map<int, int>* KjGraph::getConditionVC() const {
-        return &condition_VC;
-    }
-
-    const std::map<int, std::set<int>>* KjGraph::getConditionVV() const {
-        return &condition_VV;
-    }
+	const std::map<int, int>* KjGraph::get_sigma() const {
+		return &sigma_;
+	}
 
 }
 

@@ -13,13 +13,13 @@ namespace pvc {
         for (size_t i = 0; i < graph_count_; i++) {
             for (auto &vc_cond: *graphs[graph_count_ - i - 1].getConditionVC()) {
                 auto item = vc_bitmap_.insert({vc_cond.first, utils::TBitmap(graph_count_)});
-                item.first->second.setValue(vc_cond.second, i);
+                item.first->second.set_value(vc_cond.second, i);
             }
             
             for (auto &const_used: graphs[graph_count_ - i - 1].variable_used) {
                 for (auto &sigma_used: graphs[graph_count_ - i - 1].constant_used) {
                     auto item = vc_bitmap_.insert({const_used.first, utils::TBitmap(graph_count_)});
-                    item.first->second.setNegativeValue(sigma_used.first, i);
+                    item.first->second.set_negative_value(sigma_used.first, i);
                 }
             }
             
@@ -36,7 +36,7 @@ namespace pvc {
         for (auto &vc: bounds) {
             auto exists = vc_bitmap_.find(vc.first);
             if (exists != vc_bitmap_.end())
-                mask &= exists->second.getFilter(vc.second);
+                mask &= exists->second.get_filter(vc.second);
         }
         
         return utils::bitop::rightmost_one_at(mask);

@@ -13,32 +13,34 @@
 
 namespace fvc {
 
-    class KjGraph {
+	class KjGraph {
 
-    public:
-        int width;
+	public:
+		int width;
 
-        std::map<int, int> subsequent;
+		std::map<int, int> subsequent;
 
-        bool addCondition(int a, int b);
+		bool add_condition(int a, int b);
 
-        const std::map<int, int>* getConditionVC() const;
+		const std::map<int, int>* get_condition() const;
 
-        const std::map<int, std::set<int>>* getConditionVV() const;
+		const std::map<int, int>* get_sigma() const;
 
-    private:
+		// Basic operation of Union find.
 
-        std::map<int, int> condition_VC;
+		int find_parent(int x);
 
-        std::map<int, std::set<int>> condition_VV;
-        std::map<int, int> inversed_VV;
+		bool unite(int a, int b);
 
-        bool addVCConditionRecursive(int var, int constant);
+		bool set_sigma(int var, int constant);
 
-        bool addVCCondition(int var, int constant);
+	private:
 
-    };
+		std::map<int, int> parent_;
+		std::map<int, int> rank_;
+		std::map<int, int> sigma_;
 
+	};
 
 };
 

@@ -20,9 +20,9 @@ namespace utils {
     public:
         SBitmap(int size);
     
-        const std::map<std::pair<int, int>, SBitmap::Bitmap>* getBitmap() const;
+        const std::map<std::pair<int, int>, SBitmap::Bitmap>* get_bitmap() const;
     
-        void setValue(std::pair<int, int> symbol, size_t caseId);
+        void set_value(std::pair<int, int> symbol, size_t caseId);
     
         void compile();
 
