@@ -8,8 +8,8 @@ namespace fvc {
 
 	bool KjGraph::set_sigma(int var, int constant) {
 		// insert to parent if not exists
-		parent_.insert({ var, var });
-		auto x = sigma_.insert({ var, constant });
+		auto parent = find_parent(var);
+		auto x = sigma_.insert({ parent, constant });
 		if (!x.second) {
 			return x.first->second == constant;
 		}
@@ -58,12 +58,12 @@ namespace fvc {
 		if (rank_[x] < rank_[y]) {
 			parent_[x] = y;
 			if (has_sigma)
-				sigma_.insert({ x, sigma_xy });
+				sigma_.insert({ y, sigma_xy });
 
 		} else {
 			parent_[y] = x;
 			if (has_sigma)
-				sigma_.insert({ y, sigma_xy });
+				sigma_.insert({ x, sigma_xy });
 
 			if (rank_[x] == rank_[y]) rank_[x]++;
 		}
