@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 BASEDIR=`dirname $0`
 BASEDIR=`(cd "$BASEDIR"; pwd)`
@@ -31,7 +31,7 @@ do
         for al in {0..11}
         do
             echo "ratio: ${ratio}, plen: ${pl}, talpha: ${TALPHA[al]}, palpha: ${PALPHA[al]}"
-            LOG=${RESULT_DIR}/m_${MODE}_n_${N_CASE}_t_${TLEN}_p_${pl}_a_${TALPHA[al]}_b_${PALPHA[pl]}_v_${ratio}
+            LOG=${RESULT_DIR}/m_${MODE}_n_${N_CASE}_t_${TLEN}_p_${pl}_a_${TALPHA[al]}_b_${PALPHA[al]}_v_${ratio}
             ${CMD} -m ${MODE} -n ${N_CASE} -t ${TLEN} -p ${pl} -a ${TALPHA[al]} -b ${PALPHA[al]} -v ${ratio} > ${LOG}
         done
     done
