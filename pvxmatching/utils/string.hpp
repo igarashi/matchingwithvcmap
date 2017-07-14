@@ -12,6 +12,9 @@ namespace utils {
 	namespace string {
 		inline std::string strvprintf(const char* format, std::va_list arg)
 		{
+			std::va_list copy;
+			va_copy(copy, arg);
+
 			std::string ret;
 			ret.resize(64);
 			auto n = static_cast<size_t>(vsnprintf(&ret[0], ret.size(), format, arg));
@@ -25,7 +28,7 @@ namespace utils {
 			{
 #endif
 				ret.resize(n + 1);
-				n = vsnprintf(&ret[0], ret.size(), format, arg);
+				n = static_cast<size_t>(vsnprintf(&ret[0], ret.size(), format, copy));
 			}
 			ret.resize(n);
 			return ret;
