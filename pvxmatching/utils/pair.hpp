@@ -8,17 +8,17 @@
 #include <utility>
 
 namespace utils {
-    namespace pair {
-        
-        template <typename T>
-        inline std::pair<T, T> make_ordered_pair(const T &val1, const T &val2) {
-            if (val1 > val2) {
-                return { val2, val1 };
-            } else {
-                return { val1, val2 };
-            }
-        };
-    }
+namespace pair {
+
+template <typename T>
+inline std::pair<T, T> make_ordered_pair(const T& val1, const T& val2) {
+  if (val1 > val2) {
+    return {val2, val1};
+  } else {
+    return {val1, val2};
+  }
+};
+}
 }
 
 #endif //PVXMATCHING_PAIR_HPP

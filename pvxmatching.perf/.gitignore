@@ -4,6 +4,7 @@ Makefile
 cmake_install.cmake
 cmake-build-debug/
 *.cbp
-.idea/
+.idea/*
+!.idea/codeStyleSettings.xml
 pvxperf
 exp_result/

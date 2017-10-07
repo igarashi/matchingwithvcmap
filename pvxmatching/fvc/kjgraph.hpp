@@ -13,37 +13,36 @@
 
 namespace fvc {
 
-	class KjGraph {
+class KjGraph {
 
-	public:
-		int width;
+public:
+  int width;
 
-		std::map<int, int> subsequent;
+  std::map<int, int> subsequent;
 
-		bool add_condition(int a, int b);
+  bool add_condition(int a, int b);
 
-		const std::map<int, int>* get_condition() const;
+  const std::map<int, int> *get_condition() const;
 
-		const std::map<int, int>* get_sigma() const;
+  const std::map<int, int> *get_sigma() const;
 
-		// Basic operation of Union find.
+  // Basic operation of Union find.
 
-		int find_parent(int x);
+  int find_parent(int x);
 
-		bool unite(int a, int b);
+  bool unite(int a, int b);
 
-		bool set_sigma(int var, int constant);
+  bool set_sigma(int var, int constant);
 
-	private:
+private:
 
-		std::map<int, int> parent_;
-		std::map<int, int> rank_;
-		std::map<int, int> sigma_;
-
-	};
+  std::map<int, int> parent_;
+  std::map<int, int> rank_;
+  std::map<int, int> sigma_;
 
 };
 
+};
 
 
 #endif //PVXMATCHING_FVC_KJGRAPH_HPP

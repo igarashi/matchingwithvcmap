@@ -12,25 +12,25 @@
 #include "../utils/injective_map.hpp"
 
 namespace pvc {
-    
-    class KmpBased {
-    private:
-        void calculateTable();
-        
-        const std::vector<int> pattern_;
-        const int pattern_length_;
-        
-        std::vector <KShiftingCondition> conditions_;
-        
-        void calculateNextBounds(int position, int width, utils::injective_map::InjectiveMap &bounds) const;
-    
-    public:
-        KmpBased(std::vector<int> pattern);
-        
-        bool match(int current, int &pos, utils::injective_map::InjectiveMap &bounds) const;
-    };
-    
-    
+
+class KmpBased {
+private:
+  void calculateTable();
+
+  const std::vector<int> pattern_;
+  const int pattern_length_;
+
+  std::vector<KShiftingCondition> conditions_;
+
+  void calculateNextBounds(int position, int width, utils::injective_map::InjectiveMap& bounds) const;
+
+public:
+  KmpBased(std::vector<int> pattern);
+
+  bool match(int current, int& pos, utils::injective_map::InjectiveMap& bounds) const;
+};
+
+
 }
 
 

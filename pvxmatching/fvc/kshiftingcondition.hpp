@@ -16,31 +16,31 @@
 
 namespace fvc {
 
-	class KShiftingCondition {
-	public:
-		KShiftingCondition(std::vector<KjGraph> graphs);
+class KShiftingCondition {
+public:
+  KShiftingCondition(std::vector<KjGraph> graphs);
 
-		int calculate_longest_shifting(std::map<int, int> &bounds) const;
+  int calculate_longest_shifting(std::map<int, int>& bounds) const;
 
-		const std::map<int, int>* get_subsequent(int index) const;
+  const std::map<int, int> *get_subsequent(int index) const;
 
-		int get_width(int index) const;
+  int get_width(int index) const;
 
-	private:
+private:
 
-		int graph_count_;
+  int graph_count_;
 
-		std::vector<std::map<int, int>> subsequent_;
+  std::vector<std::map<int, int>> subsequent_;
 
-		std::vector<int> widths_;
+  std::vector<int> widths_;
 
-		std::map<int, utils::RBitmap> vc_bitmap_;
+  std::map<int, utils::RBitmap> vc_bitmap_;
 
-		utils::SBitmap vv_bitmap_;
+  utils::SBitmap vv_bitmap_;
 
-		unsigned long default_mask_;
+  unsigned long default_mask_;
 
-	};
+};
 
 }
 

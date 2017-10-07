@@ -8,13 +8,12 @@
 #include <math.h>
 
 namespace utils {
-    namespace bitop {
-        inline int rightmost_one_at(unsigned long n)
-        {
-            //if (n == 0)
-            //	return -1;
-            return log2l(n & -n);
-        }
-    }
+namespace bitop {
+inline int rightmost_one_at(unsigned long n) {
+  //if (n == 0)
+  //	return -1;
+  return log2l(n & -n);
+}
+}
 }
 #endif //PVXMATCHING_BITOP_HPP

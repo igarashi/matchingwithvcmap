@@ -16,7 +16,7 @@
 vec.push_back(std::chrono::duration_cast<std::chrono::microseconds>(__end - __start).count());}
 
 
-inline void progress(int current, int total, std::ostream &of = std::cerr) {
+inline void progress(int current, int total, std::ostream& of = std::cerr) {
   const int bar_width = 50;
   float per = float(current) / total;
   int bar = int(bar_width * per);
@@ -33,8 +33,8 @@ inline void progress(int current, int total, std::ostream &of = std::cerr) {
 
 void test_kmpbased_fvc(int n_case, int text_length, int pattern_length,
                        int text_alphabet_size, int pattern_alphabet_size, int variable_ratio,
-                       std::vector<long long int> &preprocessing_time, std::vector<long long int> &query_time,
-                       std::vector<long long int> &naive_time, std::vector<int> &match_count) {
+                       std::vector<long long int>& preprocessing_time, std::vector<long long int>& query_time,
+                       std::vector<long long int>& naive_time, std::vector<int>& match_count) {
 
   for (auto c = 0; c < n_case; c++) {
     progress(c + 1, n_case);
@@ -85,8 +85,8 @@ void test_kmpbased_fvc(int n_case, int text_length, int pattern_length,
 
 void test_kmpbased_pvc(int n_case, int text_length, int pattern_length,
                        int text_alphabet_size, int pattern_alphabet_size, int variable_ratio,
-                       std::vector<long long int> &preprocessing_time, std::vector<long long int> &query_time,
-                       std::vector<long long int> &naive_time, std::vector<int> &match_count) {
+                       std::vector<long long int>& preprocessing_time, std::vector<long long int>& query_time,
+                       std::vector<long long int>& naive_time, std::vector<int>& match_count) {
 
   for (auto c = 0; c < n_case; c++) {
     progress(c + 1, n_case);

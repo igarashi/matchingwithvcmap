@@ -3,4 +3,5 @@ CMakeFiles/
 Makefile
 libpvxmatching.a
 cmake_install.cmake
-
+.idea/*
+!.idea/codeStyleSettings.xml

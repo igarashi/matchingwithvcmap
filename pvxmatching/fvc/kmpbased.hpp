@@ -15,28 +15,27 @@
 
 namespace fvc {
 
-	class KmpBased {
+class KmpBased {
 
-	private:
-		void calculate_table();
+private:
+  void calculate_table();
 
-		const std::vector<int> pattern_;
-		const int pattern_length_;
+  const std::vector<int> pattern_;
+  const int pattern_length_;
 
-		std::vector<KShiftingCondition> conditions_;
+  std::vector<KShiftingCondition> conditions_;
 
-		void calculate_nextbounds(int position, int width, std::map<int, int> &bounds) const;
+  void calculate_nextbounds(int position, int width, std::map<int, int>& bounds) const;
 
-	public:
+public:
 
-		KmpBased(std::vector<int> pattern);
+  KmpBased(std::vector<int> pattern);
 
-		bool match(int current, int &pos, std::map<int, int> &bounds) const;
+  bool match(int current, int& pos, std::map<int, int>& bounds) const;
 
-	};
+};
 
 }
-
 
 
 #endif //PVXMATCHING_FVC_KMPBASED_HPP
