@@ -32,12 +32,12 @@ void KmpBased::calculateTable() {
 
       if (utils::alphabet::is_variable(subseq_char)) {
         // subsequent V<-V/C
-        if (!current.addSubsequent(subseq_char, original_char)) {
+        if (!current.add_subsequent(subseq_char, original_char)) {
           continue;
         }
       } else {
         // condition C->V/C
-        if (!current.addCondition(subseq_char, original_char)) {
+        if (!current.add_condition(subseq_char, original_char)) {
           continue;
         }
       }

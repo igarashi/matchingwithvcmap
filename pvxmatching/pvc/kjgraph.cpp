@@ -6,71 +6,79 @@
 
 namespace pvc {
 
-bool KjGraph::addSubsequent(int var, int symbol) {
+bool KjGraph::add_subsequent(int var, int symbol) {
   // var(p2) <-> symbol
 
-  std::map<int, int> *target1;
-  std::map<int, int> *target2;
+  std::map<int, std::shared_ptr<KjGraphComponent>> *temp;
+  std::shared_ptr<KjGraphComponent> target;
 
-  std::map<int, int> *reference;
-  bool is_reversed = false;
+  auto exists = pi_prime.find(var);
+  if (exists != pi_prime.end()) {
+    target = exists->second;
+  } else {
+    target = std::make_shared<KjGraphComponent>();
+    target->set_pi_prime(var);
+
+    pi_prime.insert({var, target});
+  }
 
   if (utils::alphabet::is_variable(symbol)) {
     // if symbol is variable
     // var(p2) <-> var(p)
+    temp = &pi;
 
-    target1 = &edge_from_p2_to_p;
-    target2 = &edge_from_p_to_p2;
-
-    reference = &edge_from_p2_to_s;
+    if (!target->set_pi(symbol))
+      return false;
   } else {
     // if symbol is sigma
     // var(p2) <-> symbol(s)
+    temp = &sigma;
 
-    target1 = &edge_from_p2_to_s;
-    target2 = &edge_from_s_to_p2;
-
-    reference = &edge_from_p2_to_p;
-    is_reversed = true;
+    if (!target->set_sigma(symbol))
+      return false;
   }
 
-  auto exists = target1->insert({var, symbol});
-  if (!exists.second && exists.first->second != symbol) {
-    return false; // duplicate
-  }
+  // insert target to another symbol
+  auto exists_temp = temp->insert({symbol, target});
+  if (exists_temp.first->second != target) {
+    // merge
+    if (!target->merge(exists_temp.first->second))
+      return false;
 
-  auto exists2 = target2->insert({symbol, var});
-  if (!exists2.second && exists2.first->second != var) {
-    return false; // duplicate
-  }
-
-  // check if exists condition between p <-> s
-  auto exists_c = reference->find(var);
-  if (exists_c != reference->end()) {
-    if (is_reversed) {
-      return addCondition(symbol, exists_c->second);
-    } else {
-      return addCondition(exists_c->second, symbol);
-    }
+    exists_temp.first->second = target;
   }
 
   return true;
 }
 
-bool KjGraph::addCondition(int sigma, int symbol) {
+bool KjGraph::add_condition(int sigma, int symbol) {
 
   if (utils::alphabet::is_variable(symbol)) {
     // symbol is a var
     // sigma(s) <-> symbol(p)
 
-    auto exists = edge_from_s_to_p.insert({sigma, symbol});
-    if (!exists.second && exists.first->second != symbol) {
-      return false; // duplicate
+    std::map<int, std::shared_ptr<KjGraphComponent>> *temp;
+    std::shared_ptr<KjGraphComponent> target;
+
+    auto exists = this->sigma.find(sigma);
+    if (exists != this->sigma.end()) {
+      target = exists->second;
+    } else {
+      target = std::make_shared<KjGraphComponent>();
+      target->set_sigma(sigma);
+
+      this->sigma.insert({sigma, target});
     }
 
-    auto exists2 = edge_from_p_to_s.insert({symbol, sigma});
-    if (!exists2.second && exists2.first->second != sigma) {
-      return false; // duplicate
+    if (!target->set_pi(symbol))
+      return false;
+
+    auto exists_pi = pi.insert({symbol, target});
+    if (exists_pi.first->second != target) {
+      if (!target->merge(exists_pi.first->second))
+        return false;
+
+      exists_pi.first->second = target;
     }
 
     return true;
@@ -84,15 +92,8 @@ bool KjGraph::addCondition(int sigma, int symbol) {
 
 std::map<int, int> KjGraph::get_subsequent() const {
   std::map<int, int> temp;
-  for (auto entry:  edge_from_p2_to_p) {
-    temp.insert({entry.first, entry.second});
-  }
-
-  for (auto entry: edge_from_p2_to_s) {
-    auto res = temp.insert({entry.first, entry.second});
-    if (!res.second) {
-      res.first->second = entry.second; // Update with Sigma value
-    }
+  for (auto entry: pi_prime) {
+    auto res = temp.insert({entry.first, entry.second->get_subsequent()});
   }
   return temp;
 }

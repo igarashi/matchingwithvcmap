@@ -12,14 +12,17 @@ KShiftingCondition::KShiftingCondition(std::vector<KjGraph> graphs) : graph_coun
   // the rightmost bit corresponds to the longest shifting. (We have to reverse here.)
   for (size_t i = 0; i < graph_count_; i++) {
     // Condition for F_{k,j}(x) \cap \Sigma \nsubseteq {p}
-    for (auto& vc_cond: graphs[graph_count_ - i - 1].edge_from_p_to_s) {
+    for (auto& vc_cond: graphs[graph_count_ - i - 1].pi) {
+      if (!vc_cond.second->has_sigma())
+        continue;
+
       auto item = vc_bitmap_.insert({vc_cond.first, utils::TBitmap(graph_count_)});
-      item.first->second.set_value(vc_cond.second, i);
+      item.first->second.set_value(vc_cond.second->sigma(), i);
     }
 
     // Condition for (b')
-    for (auto& var: graphs[graph_count_ - i - 1].edge_from_p_to_p2) {
-      for (auto& sigma_used: graphs[graph_count_ - i - 1].edge_from_s_to_p2) {
+    for (auto& var: graphs[graph_count_ - i - 1].pi) {
+      for (auto& sigma_used: graphs[graph_count_ - i - 1].sigma) {
         auto item = vc_bitmap_.insert({var.first, utils::TBitmap(graph_count_)});
         item.first->second.set_negative_value(sigma_used.first, i);
       }

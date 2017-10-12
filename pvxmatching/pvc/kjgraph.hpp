@@ -30,6 +30,20 @@ public:
     return sigma_;
   }
 
+  int get_subsequent() {
+    if (sigma_set_)
+      return sigma_;
+
+    if (!pi_prime_set_)
+      throw "Invalid operation.";
+
+    return pi_prime_;
+  }
+
+  bool has_sigma() {
+    return sigma_set_;
+  }
+
   bool set_pi(int pi) {
     if (pi_set_ && pi_ != pi)
       return false;
@@ -103,9 +117,9 @@ public:
 
   std::map<int, int> get_subsequent() const;
 
-  bool addCondition(int sigma, int symbol);
+  bool add_condition(int sigma, int symbol);
 
-  bool addSubsequent(int var, int symbol);
+  bool add_subsequent(int var, int symbol);
 
   std::map<int, std::shared_ptr<KjGraphComponent>> sigma;
 
