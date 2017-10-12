@@ -98,7 +98,7 @@ const std::map<int, int> *KjGraph::get_condition() const {
   return &parent_;
 }
 
-const std::map<int, int> *KjGraph::get_sigma() const {
+const std::map<int, int> *KjGraph::get_subsequent() const {
   return &sigma_;
 }
 

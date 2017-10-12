@@ -17,11 +17,11 @@ class KShiftingCondition {
 public:
   KShiftingCondition(std::vector<KjGraph> graphs);
 
-  int calculateLongestShifting(utils::injective_map::InjectiveMap& bounds) const;
+  int calculate_longest_shifting(utils::injective_map::InjectiveMap& bounds) const;
 
-  const std::map<int, int> *getSubsequent(int index) const;
+  const std::map<int, int> *get_subsequent(int index) const;
 
-  int getWidth(int index) const;
+  int get_width(int index) const;
 
 private:
 

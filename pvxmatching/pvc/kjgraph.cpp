@@ -6,105 +6,95 @@
 
 namespace pvc {
 
-bool KjGraph::addVCCondition(int var, int constant) {
-  auto exists = condition_VC_.insert({var, constant});
-  if (!exists.second) {
-    return exists.first->second == constant;
+bool KjGraph::addSubsequent(int var, int symbol) {
+  // var(p2) <-> symbol
+
+  std::map<int, int> *target1;
+  std::map<int, int> *target2;
+
+  std::map<int, int> *reference;
+  bool is_reversed = false;
+
+  if (utils::alphabet::is_variable(symbol)) {
+    // if symbol is variable
+    // var(p2) <-> var(p)
+
+    target1 = &edge_from_p2_to_p;
+    target2 = &edge_from_p_to_p2;
+
+    reference = &edge_from_p2_to_s;
+  } else {
+    // if symbol is sigma
+    // var(p2) <-> symbol(s)
+
+    target1 = &edge_from_p2_to_s;
+    target2 = &edge_from_s_to_p2;
+
+    reference = &edge_from_p2_to_p;
+    is_reversed = true;
   }
 
-  auto var_exists = variable_used.find(var);
-  if (var_exists != variable_used.end()) {
-    // there are edge between \Pi \to \Pi'
-    // check if constant is already mapped.
-    auto const_exists = constant_used.insert({constant, var_exists->second});
-    if (!const_exists.second) {
-      if (const_exists.first->second != var_exists->second) {
-        // there are distinct nodes x,y \in \Pi'
-        //  belong to the same connected component (via \Sigma).
-        return false;
-      }
+  auto exists = target1->insert({var, symbol});
+  if (!exists.second && exists.first->second != symbol) {
+    return false; // duplicate
+  }
+
+  auto exists2 = target2->insert({symbol, var});
+  if (!exists2.second && exists2.first->second != var) {
+    return false; // duplicate
+  }
+
+  // check if exists condition between p <-> s
+  auto exists_c = reference->find(var);
+  if (exists_c != reference->end()) {
+    if (is_reversed) {
+      return addCondition(symbol, exists_c->second);
+    } else {
+      return addCondition(exists_c->second, symbol);
     }
   }
+
   return true;
 }
 
-bool KjGraph::addSubsequent(int var, int symbol) {
+bool KjGraph::addCondition(int sigma, int symbol) {
+
   if (utils::alphabet::is_variable(symbol)) {
-    // if symbol is variable
-    auto var_exists = variable_used.insert({symbol, var});
-    if (!var_exists.second) {
-      if (var_exists.first->second != var) {
-        // there are distinct nodes x,y \in \Pi'
-        //  belong to the same connected component (via \Pi).
-        return false;
-      }
+    // symbol is a var
+    // sigma(s) <-> symbol(p)
+
+    auto exists = edge_from_s_to_p.insert({sigma, symbol});
+    if (!exists.second && exists.first->second != symbol) {
+      return false; // duplicate
     }
 
-    auto cond_exists = condition_VC_.find(symbol);
-    if (cond_exists != condition_VC_.end()) {
-      auto const_exists = constant_used.insert({cond_exists->second, var});
-      if (!const_exists.second) {
-        if (const_exists.first->second != var) {
-          // there are distinct nodes x,y \in \Pi'
-          //  belong to the same connected component (via \Sigma).
-          return false;
-        }
-      }
+    auto exists2 = edge_from_p_to_s.insert({symbol, sigma});
+    if (!exists2.second && exists2.first->second != sigma) {
+      return false; // duplicate
     }
+
+    return true;
+
   } else {
-    auto const_exists = constant_used.insert({symbol, var});
-    if (!const_exists.second) {
-      if (const_exists.first->second != var) {
-        // there are distinct nodes x,y \in \Pi'
-        //  belong to the same connected component (via \Sigma).
-        return false;
-      }
-    }
-  }
-
-  // then, add ordinal subsequent.
-  auto exists = subsequent.insert({var, symbol});
-  if (!exists.second) {
-    if (!addCondition(exists.first->second, symbol)) {
-      return false;
-    }
-
-    if (utils::alphabet::is_variable(exists.first->second)) {
-      if (utils::alphabet::is_constant(symbol)) {
-        exists.first->second = symbol;
-      }
-    }
-  }
-
-}
-
-bool KjGraph::addCondition(int a, int b) {
-
-  if (utils::alphabet::is_variable(a)) {
-    if (utils::alphabet::is_variable(b)) {
-      if (a == b)
-        return true;
-
-      // there is no distinct nodes x,y \in \Pi belong to the same connected component.
-      // (because pre-function u is injection.)
-      return false;
-    } else {
-      // a: var, b: const
-      return addVCCondition(a, b);
-    }
-  } else {
-    if (utils::alphabet::is_variable(b)) {
-      // a: const, b: var
-      return addVCCondition(b, a);
-    } else {
-      // a: const, b: const
-      return (a == b);
-    }
+    // symbol is a sigma
+    // sigma <-> symbol(sigma)
+    return (sigma == symbol);
   }
 }
 
-const std::map<int, int> *KjGraph::getConditionVC() const {
-  return &condition_VC_;
+std::map<int, int> KjGraph::get_subsequent() const {
+  std::map<int, int> temp;
+  for (auto entry:  edge_from_p2_to_p) {
+    temp.insert({entry.first, entry.second});
+  }
+
+  for (auto entry: edge_from_p2_to_s) {
+    auto res = temp.insert({entry.first, entry.second});
+    if (!res.second) {
+      res.first->second = entry.second; // Update with Sigma value
+    }
+  }
+  return temp;
 }
 
 }

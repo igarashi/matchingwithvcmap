@@ -13,7 +13,7 @@ KShiftingCondition::KShiftingCondition(std::vector<KjGraph> graphs) : graph_coun
                                                                       widths_(graphs.size()) {
   // the rightmost bit corresponds to the longest shifting. (We have to reverse here.)
   for (size_t i = 0; i < graph_count_; i++) {
-    auto sigma_ref = graphs[graph_count_ - i - 1].get_sigma();
+    auto sigma_ref = graphs[graph_count_ - i - 1].get_subsequent();
 
     for (auto& cond_pi : *graphs[graph_count_ - i - 1].get_condition()) {
       auto parent = graphs[graph_count_ - i - 1].find_parent(cond_pi.first);

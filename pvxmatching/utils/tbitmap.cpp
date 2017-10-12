@@ -29,7 +29,7 @@ void TBitmap::compile() {
   auto sigmastrict_it = temp_bitmap_.begin();
   auto bound_it = temp_neg_bitmap_.begin();
 
-  // Note that we assume that std::map<>::iterator traverse elements in ascending order.
+  // Note that we supposed that std::map<>::iterator traverse elements in ascending order.
   while (sigmastrict_it != temp_bitmap_.end() || bound_it != temp_neg_bitmap_.end()) {
     if (bound_it == temp_neg_bitmap_.end()) {
       // sigma is stricted, but there is no bounds
