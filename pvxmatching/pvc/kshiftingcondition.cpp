@@ -11,19 +11,24 @@ KShiftingCondition::KShiftingCondition(std::vector<KjGraph> graphs) : graph_coun
                                                                       widths_(graphs.size()) {
   // the rightmost bit corresponds to the longest shifting. (We have to reverse here.)
   for (size_t i = 0; i < graph_count_; i++) {
-    for (auto& vc_cond: *graphs[graph_count_ - i - 1].getConditionVC()) {
+    // Condition for F_{k,j}(x) \cap \Sigma \nsubseteq {p}
+    for (auto& vc_cond: graphs[graph_count_ - i - 1].pi) {
+      if (!vc_cond.second->has_sigma())
+        continue;
+
       auto item = vc_bitmap_.insert({vc_cond.first, utils::TBitmap(graph_count_)});
-      item.first->second.set_value(vc_cond.second, i);
+      item.first->second.set_value(vc_cond.second->sigma(), i);
     }
 
-    for (auto& const_used: graphs[graph_count_ - i - 1].variable_used) {
-      for (auto& sigma_used: graphs[graph_count_ - i - 1].constant_used) {
-        auto item = vc_bitmap_.insert({const_used.first, utils::TBitmap(graph_count_)});
+    // Condition for (b')
+    for (auto& var: graphs[graph_count_ - i - 1].pi) {
+      for (auto& sigma_used: graphs[graph_count_ - i - 1].sigma) {
+        auto item = vc_bitmap_.insert({var.first, utils::TBitmap(graph_count_)});
         item.first->second.set_negative_value(sigma_used.first, i);
       }
     }
 
-    subsequent_[i] = graphs[graph_count_ - i - 1].subsequent;
+    subsequent_[i] = graphs[graph_count_ - i - 1].get_subsequent();
     widths_[i] = graphs[graph_count_ - i - 1].width;
   }
 
@@ -31,7 +36,7 @@ KShiftingCondition::KShiftingCondition(std::vector<KjGraph> graphs) : graph_coun
     bitmap.second.compile();
 }
 
-int KShiftingCondition::calculateLongestShifting(utils::injective_map::InjectiveMap& bounds) const {
+int KShiftingCondition::calculate_longest_shifting(utils::injective_map::InjectiveMap& bounds) const {
   auto mask = default_mask_;
   for (auto& vc: bounds) {
     auto exists = vc_bitmap_.find(vc.first);
@@ -42,11 +47,11 @@ int KShiftingCondition::calculateLongestShifting(utils::injective_map::Injective
   return utils::bitop::rightmost_one_at(mask);
 }
 
-const std::map<int, int> *KShiftingCondition::getSubsequent(int index) const {
+const std::map<int, int> *KShiftingCondition::get_subsequent(int index) const {
   return &subsequent_[index];
 }
 
-int KShiftingCondition::getWidth(int index) const {
+int KShiftingCondition::get_width(int index) const {
   return widths_[index];
 }
 }

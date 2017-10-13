@@ -24,7 +24,7 @@ public:
 
   const std::map<int, int> *get_condition() const;
 
-  const std::map<int, int> *get_sigma() const;
+  const std::map<int, int> *get_subsequent() const;
 
   // Basic operation of Union find.
 

@@ -32,12 +32,12 @@ void KmpBased::calculateTable() {
 
       if (utils::alphabet::is_variable(subseq_char)) {
         // subsequent V<-V/C
-        if (!current.addSubsequent(subseq_char, original_char)) {
+        if (!current.add_subsequent(subseq_char, original_char)) {
           continue;
         }
       } else {
         // condition C->V/C
-        if (!current.addCondition(subseq_char, original_char)) {
+        if (!current.add_condition(subseq_char, original_char)) {
           continue;
         }
       }
@@ -55,7 +55,7 @@ void KmpBased::calculateNextBounds(int position, int index, utils::injective_map
   utils::injective_map::InjectiveMap before(bounds);
   bounds.clear();
 
-  for (auto& symbol: *conditions_[position].getSubsequent(index)) {
+  for (auto& symbol: *conditions_[position].get_subsequent(index)) {
     if (utils::alphabet::is_variable(symbol.second)) {
       auto result = bounds.insert(symbol.first, before[symbol.second]);
       if (result.second != utils::injective_map::Inserted) throw "Invalid Error!";
@@ -99,10 +99,10 @@ bool KmpBased::match(int current, int& pos, utils::injective_map::InjectiveMap& 
         return match;
 
       // calculate next position
-      auto rightmost = conditions_[pos].calculateLongestShifting(bounds);
+      auto rightmost = conditions_[pos].calculate_longest_shifting(bounds);
       // replace with subsequent
       calculateNextBounds(pos, rightmost, bounds);
-      pos = conditions_[pos].getWidth(rightmost);
+      pos = conditions_[pos].get_width(rightmost);
 
       if (match)
         return match;
