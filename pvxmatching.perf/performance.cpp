@@ -162,27 +162,37 @@ int main(int argc, char *argv[]) {
                                         p.get<int>("palpha"),
                                         p.get<int>("vratio")) << std::endl;
   if (mode == "fvckmp") {
-    test_kmpbased_fvc(p.get<int>("case"),
-                      p.get<int>("tlen"),
-                      p.get<int>("plen"),
-                      p.get<int>("talpha"),
-                      p.get<int>("palpha"),
-                      p.get<int>("vratio"),
-                      preprocessing,
-                      query,
-                      naive,
-                      match);
+    try {
+      test_kmpbased_fvc(p.get<int>("case"),
+                        p.get<int>("tlen"),
+                        p.get<int>("plen"),
+                        p.get<int>("talpha"),
+                        p.get<int>("palpha"),
+                        p.get<int>("vratio"),
+                        preprocessing,
+                        query,
+                        naive,
+                        match);
+    } catch (std::string e) {
+      std::cerr << "\n An error has occured: " << e << std::endl;
+      exit(-1);
+    }
   } else if (mode == "pvckmp") {
-    test_kmpbased_pvc(p.get<int>("case"),
-                      p.get<int>("tlen"),
-                      p.get<int>("plen"),
-                      p.get<int>("talpha"),
-                      p.get<int>("palpha"),
-                      p.get<int>("vratio"),
-                      preprocessing,
-                      query,
-                      naive,
-                      match);
+    try {
+      test_kmpbased_pvc(p.get<int>("case"),
+                        p.get<int>("tlen"),
+                        p.get<int>("plen"),
+                        p.get<int>("talpha"),
+                        p.get<int>("palpha"),
+                        p.get<int>("vratio"),
+                        preprocessing,
+                        query,
+                        naive,
+                        match);
+    } catch (std::string e) {
+      std::cerr << "\n An error has occured: " << e << std::endl;
+      exit(-1);
+    }
   } else {
     std::cerr << "mode:" << mode << " is currently not supported." << std::endl;
     std::terminate();

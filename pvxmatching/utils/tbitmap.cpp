@@ -7,7 +7,7 @@
 namespace utils {
 TBitmap::TBitmap(int size) : size_(size) {
   if (size > MAX_BIT_SIZE)
-    throw "Exception: size exceed MAX_BIT_SIZE while creating bitmap. (Use long as Bitmap instead.)";
+    throw std::string("Exception: size exceed MAX_BIT_SIZE while creating bitmap. (Use longer int as Bitmap instead.)");
 }
 
 void TBitmap::set_value(int symbol, size_t caseId) {

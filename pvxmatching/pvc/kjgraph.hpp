@@ -35,7 +35,7 @@ public:
       return sigma_;
 
     if (!pi_set_)
-      throw "Invalid operation.";
+      throw std::string("Invalid operation.");
 
     return pi_;
   }

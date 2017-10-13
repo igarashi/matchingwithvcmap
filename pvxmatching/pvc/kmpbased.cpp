@@ -58,10 +58,10 @@ void KmpBased::calculateNextBounds(int position, int index, utils::injective_map
   for (auto& symbol: *conditions_[position].get_subsequent(index)) {
     if (utils::alphabet::is_variable(symbol.second)) {
       auto result = bounds.insert(symbol.first, before[symbol.second]);
-      if (result.second != utils::injective_map::Inserted) throw "Invalid Error!";
+      if (result.second != utils::injective_map::Inserted) throw std::string("Invalid Error!");
     } else {
       auto result = bounds.insert(symbol.first, symbol.second);
-      if (result.second != utils::injective_map::Inserted) throw "Invalid Error!";
+      if (result.second != utils::injective_map::Inserted) throw std::string("Invalid Error!");
     }
   }
 }

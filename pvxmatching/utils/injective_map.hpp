@@ -51,7 +51,7 @@ public:
     if (value != map_.end())
       return value->second;
 
-    throw "Invalid Key";
+    throw std::string("Invalid Key");
   }
 
   std::map<int, int>::const_iterator begin() const {

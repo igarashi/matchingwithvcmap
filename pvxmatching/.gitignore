@@ -5,3 +5,4 @@ libpvxmatching.a
 cmake_install.cmake
 .idea/*
 !.idea/codeStyleSettings.xml
+pvxmatching.cbp
