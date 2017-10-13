@@ -22,7 +22,7 @@ void KmpBased::calculateTable() {
     borders[step].push_back(KjGraph());
 
     for (auto& prev : borders[step - 1]) {
-      auto current = prev; // make copy
+      KjGraph current(prev); // make copy
 
       int original_pos = step - 1; // P[k]
       int subseq_pos = current.width; // P[j]

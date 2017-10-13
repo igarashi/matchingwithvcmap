@@ -38,7 +38,6 @@ void test_kmpbased_fvc(int n_case, int text_length, int pattern_length,
 
   for (auto c = 0; c < n_case; c++) {
     progress(c + 1, n_case);
-
     int kmp_count = 0;
     int naive_count = 0;
 
@@ -49,35 +48,41 @@ void test_kmpbased_fvc(int n_case, int text_length, int pattern_length,
     auto text_int = utils::alphabet::text_variable_int_reduction(text);
     auto pattern_int = utils::alphabet::text_variable_int_reduction(pattern);
 
-    fvc::KmpBased *fvckmp;
-    BEGIN_PERF
-      fvckmp = new fvc::KmpBased(pattern_int);
-    END_PERF(preprocessing_time)
+    try {
+      fvc::KmpBased *fvckmp;
+      BEGIN_PERF
+        fvckmp = new fvc::KmpBased(pattern_int);
+      END_PERF(preprocessing_time)
 
-    auto j = 0;
-    std::map<int, int> bounds;
+      auto j = 0;
+      std::map<int, int> bounds;
 
-    BEGIN_PERF
-      for (int i = 0; i < text.length(); i++) {
-        auto kmp_match = fvckmp->match(text_int[i], j, bounds);
-        if (kmp_match) kmp_count++;
+      BEGIN_PERF
+        for (int i = 0; i < text.length(); i++) {
+          auto kmp_match = fvckmp->match(text_int[i], j, bounds);
+          if (kmp_match) kmp_count++;
+        }
+      END_PERF(query_time)
+
+      BEGIN_PERF
+        for (int i = 0; i < text.length(); i++) {
+          auto naive_match = naive::fvc_matching::match(text_int, pattern_int, i);
+          if (naive_match) naive_count++;
+        }
+      END_PERF(naive_time)
+
+      delete fvckmp;
+
+      if (kmp_count != naive_count) {
+        throw std::string("[*] Detect kmp_count != naive_count");
       }
-    END_PERF(query_time)
 
-    BEGIN_PERF
-      for (int i = 0; i < text.length(); i++) {
-        auto naive_match = naive::fvc_matching::match(text_int, pattern_int, i);
-        if (naive_match) naive_count++;
-      }
-    END_PERF(naive_time)
-
-    delete fvckmp;
-
-    if (kmp_count != naive_count) {
-      std::cerr << "[*] Detect kmp_count != naive_count" << std::endl;
+      match_count.push_back(naive_count);
+    } catch (std::string e) {
+      std::cerr << "\n An error has occured: " << e << std::endl;
+      exit(-1);
     }
 
-    match_count.push_back(naive_count);
   }
   std::cerr << " Done." << std::endl;
 }
@@ -90,7 +95,6 @@ void test_kmpbased_pvc(int n_case, int text_length, int pattern_length,
 
   for (auto c = 0; c < n_case; c++) {
     progress(c + 1, n_case);
-
     int kmp_count = 0;
     int naive_count = 0;
 
@@ -101,35 +105,41 @@ void test_kmpbased_pvc(int n_case, int text_length, int pattern_length,
     auto text_int = utils::alphabet::text_variable_int_reduction(text);
     auto pattern_int = utils::alphabet::text_variable_int_reduction(pattern);
 
-    pvc::KmpBased *pvckmp;
-    BEGIN_PERF
-      pvckmp = new pvc::KmpBased(pattern_int);
-    END_PERF(preprocessing_time)
+    try {
+      pvc::KmpBased *pvckmp;
+      BEGIN_PERF
+        pvckmp = new pvc::KmpBased(pattern_int);
+      END_PERF(preprocessing_time)
 
-    auto j = 0;
-    utils::injective_map::InjectiveMap bounds;
+      auto j = 0;
+      utils::injective_map::InjectiveMap bounds;
 
-    BEGIN_PERF
-      for (int i = 0; i < text.length(); i++) {
-        auto kmp_match = pvckmp->match(text_int[i], j, bounds);
-        if (kmp_match) kmp_count++;
+      BEGIN_PERF
+        for (int i = 0; i < text.length(); i++) {
+          auto kmp_match = pvckmp->match(text_int[i], j, bounds);
+          if (kmp_match) kmp_count++;
+        }
+      END_PERF(query_time)
+
+      BEGIN_PERF
+        for (int i = 0; i < text.length(); i++) {
+          auto naive_match = naive::pvc_matching::match(text_int, pattern_int, i);
+          if (naive_match) naive_count++;
+        }
+      END_PERF(naive_time)
+
+      delete pvckmp;
+
+      if (kmp_count != naive_count) {
+        throw std::string("[*] Detect kmp_count != naive_count");
       }
-    END_PERF(query_time)
 
-    BEGIN_PERF
-      for (int i = 0; i < text.length(); i++) {
-        auto naive_match = naive::pvc_matching::match(text_int, pattern_int, i);
-        if (naive_match) naive_count++;
-      }
-    END_PERF(naive_time)
+      match_count.push_back(naive_count);
 
-    delete pvckmp;
-
-    if (kmp_count != naive_count) {
-      std::cerr << "[*] Detect kmp_count != naive_count" << std::endl;
+    } catch (std::string e) {
+      std::cerr << "\n An error has occured: " << e << std::endl;
+      exit(-1);
     }
-
-    match_count.push_back(naive_count);
   }
   std::cerr << " Done." << std::endl;
 }
@@ -162,39 +172,30 @@ int main(int argc, char *argv[]) {
                                         p.get<int>("palpha"),
                                         p.get<int>("vratio")) << std::endl;
   if (mode == "fvckmp") {
-    try {
-      test_kmpbased_fvc(p.get<int>("case"),
-                        p.get<int>("tlen"),
-                        p.get<int>("plen"),
-                        p.get<int>("talpha"),
-                        p.get<int>("palpha"),
-                        p.get<int>("vratio"),
-                        preprocessing,
-                        query,
-                        naive,
-                        match);
-    } catch (std::string e) {
-      std::cerr << "\n An error has occured: " << e << std::endl;
-      exit(-1);
-    }
+    test_kmpbased_fvc(p.get<int>("case"),
+                      p.get<int>("tlen"),
+                      p.get<int>("plen"),
+                      p.get<int>("talpha"),
+                      p.get<int>("palpha"),
+                      p.get<int>("vratio"),
+                      preprocessing,
+                      query,
+                      naive,
+                      match);
   } else if (mode == "pvckmp") {
-    try {
-      test_kmpbased_pvc(p.get<int>("case"),
-                        p.get<int>("tlen"),
-                        p.get<int>("plen"),
-                        p.get<int>("talpha"),
-                        p.get<int>("palpha"),
-                        p.get<int>("vratio"),
-                        preprocessing,
-                        query,
-                        naive,
-                        match);
-    } catch (std::string e) {
-      std::cerr << "\n An error has occured: " << e << std::endl;
-      exit(-1);
-    }
+    test_kmpbased_pvc(p.get<int>("case"),
+                      p.get<int>("tlen"),
+                      p.get<int>("plen"),
+                      p.get<int>("talpha"),
+                      p.get<int>("palpha"),
+                      p.get<int>("vratio"),
+                      preprocessing,
+                      query,
+                      naive,
+                      match);
   } else {
-    std::cerr << "mode:" << mode << " is currently not supported." << std::endl;
+    std::cerr << "mode:" << mode << " is currently not supported." <<
+              std::endl;
     std::terminate();
   }
 
@@ -205,8 +206,7 @@ int main(int argc, char *argv[]) {
     }
   } else {
     for (int i = 0; i < query.size(); i++) {
-      std::cout << utils::string::strprintf("0\t%lld\t%lld\t%d", query[i], naive[i], match[i])
-                << std::endl;
+      std::cout << utils::string::strprintf("0\t%lld\t%lld\t%d", query[i], naive[i], match[i]) << std::endl;
     }
   }
 }

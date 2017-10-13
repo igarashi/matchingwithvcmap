@@ -74,7 +74,7 @@ public:
   bool merge(std::shared_ptr<KjGraphComponent> rhs) {
     if (pi_set_) {
       if (rhs->pi_set_ && pi_ != rhs->pi_)
-          return false;
+        return false;
     } else {
       pi_ = rhs->pi_;
       pi_set_ = rhs->pi_set_;
@@ -126,6 +126,22 @@ public:
   std::map<int, std::shared_ptr<KjGraphComponent>> pi;
 
   std::map<int, std::shared_ptr<KjGraphComponent>> pi_prime;
+
+  KjGraph() {}
+
+  // for copy constructor
+  KjGraph(const KjGraph& rhs) {
+    this->width = rhs.width;
+    for (auto symbol: rhs.sigma) {
+      this->sigma.insert({symbol.first, std::make_shared<KjGraphComponent>(*symbol.second)});
+    }
+    for (auto symbol: rhs.pi) {
+      this->sigma.insert({symbol.first, std::make_shared<KjGraphComponent>(*symbol.second)});
+    }
+    for (auto symbol: rhs.pi_prime) {
+      this->sigma.insert({symbol.first, std::make_shared<KjGraphComponent>(*symbol.second)});
+    }
+  }
 
 };
 
