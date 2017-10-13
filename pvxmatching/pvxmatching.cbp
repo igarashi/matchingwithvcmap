@@ -38,10 +38,10 @@
 				</MakeCommands>
 			</Target>
 			<Target title="pvxmatching">
-				<Option output="/Users/igarashi/Projects/matchingwithvcmap/pvxmatching/pvxmatching" prefix_auto="0" extension_auto="0"/>
+				<Option output="/Users/igarashi/Projects/matchingwithvcmap/pvxmatching/libpvxmatching.a" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/Users/igarashi/Projects/matchingwithvcmap/pvxmatching"/>
 				<Option object_output="./"/>
-				<Option type="1"/>
+				<Option type="2"/>
 				<Option compiler="clang"/>
 				<Compiler>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1"/>
@@ -60,10 +60,10 @@
 				</MakeCommands>
 			</Target>
 			<Target title="pvxmatching/fast">
-				<Option output="/Users/igarashi/Projects/matchingwithvcmap/pvxmatching/pvxmatching" prefix_auto="0" extension_auto="0"/>
+				<Option output="/Users/igarashi/Projects/matchingwithvcmap/pvxmatching/libpvxmatching.a" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/Users/igarashi/Projects/matchingwithvcmap/pvxmatching"/>
 				<Option object_output="./"/>
-				<Option type="1"/>
+				<Option type="2"/>
 				<Option compiler="clang"/>
 				<Compiler>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1"/>

@@ -34,10 +34,10 @@ public:
     if (sigma_set_)
       return sigma_;
 
-    if (!pi_prime_set_)
+    if (!pi_set_)
       throw "Invalid operation.";
 
-    return pi_prime_;
+    return pi_;
   }
 
   bool has_sigma() {
