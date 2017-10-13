@@ -3,7 +3,7 @@
 BASEDIR=`dirname $0`
 BASEDIR=`(cd "$BASEDIR"; pwd)`
 
-RESULT_DIR=${BASEDIR}/../exp_result/
+RESULT_DIR=${BASEDIR}/../exp_result_pvc/
 if [ ! -d ${RESULT_DIR} ]; then
     mkdir -p ${RESULT_DIR}
 fi
