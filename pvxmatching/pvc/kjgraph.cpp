@@ -140,7 +140,7 @@ bool KjGraph::add_condition(int sigma, int symbol) {
     if (!target->set_second(piprime_symbol) || !piprime_edge.first->second.set_first(sigma))
       return false;
 
-    if (!exists_pi.first->second.set_first(piprime_symbol) || !piprime_edge.first->second.set_second(symbol))
+    if (!exists_pi.first->second.set_second(piprime_symbol) || !piprime_edge.first->second.set_second(symbol))
       return false;
 
     return true;

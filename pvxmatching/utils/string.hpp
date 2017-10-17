@@ -5,41 +5,46 @@
 #ifndef PVXMATCHING_STRING_HPP
 #define PVXMATCHING_STRING_HPP
 
+#include <cstdio>
 #include <string>
-#include <cstdarg>
+#include <stdexcept>
 
 namespace utils {
 namespace string {
-inline std::string strvprintf(const char *format, std::va_list arg) {
-  std::va_list copy;
-  va_copy(copy, arg);
 
-  std::string ret;
-  ret.resize(64);
-  auto n = static_cast<size_t>(vsnprintf(&ret[0], ret.size(), format, arg));
+namespace detail {
 
-#ifdef _MSC_VER
-  if (n == size_t(-1))
-  {
-      n = _vscprintf(format, arg) + 1;
-#else
-  if (n > ret.size()) {
-#endif
-    ret.resize(n + 1);
-    n = static_cast<size_t>(vsnprintf(&ret[0], ret.size(), format, copy));
+template<typename T>
+T to_printable(T arg) {
+  return arg;
+}
+
+template<typename CharT>
+const CharT *to_printable(const std::basic_string<CharT> &arg) {
+  return arg.c_str();
+}
+
+}
+
+template<typename... Args>
+std::string strprintf(const std::string &format, const Args &... args) {
+  std::string str;
+  str.resize(1024);
+
+  auto size = _snprintf(&str[0], str.size(), format.c_str(), detail::to_printable(args)...);
+  if (size < 0)
+    throw std::invalid_argument("Invalid format");
+
+  if (size > str.size()) {
+    str.resize(size + 1);
+    size = _snprintf(&str[0], str.size(), format.c_str(), detail::to_printable(args)...);
   }
-  ret.resize(n);
-  return ret;
+
+  str.resize(size);
+  return str;
 }
 
-inline std::string strprintf(const char *format, ...) {
-  std::va_list arg;
-  va_start(arg, format);
-  char *alloc;
-  auto ret = strvprintf(format, arg);
-  va_end(arg);
-  return ret;
 }
 }
-}
+
 #endif //PVXMATCHING_STRING_HPP
