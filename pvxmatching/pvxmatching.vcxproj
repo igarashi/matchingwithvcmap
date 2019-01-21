@@ -33,6 +33,9 @@
     <ClCompile Include="utils\tbitmap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="utils\convolution_base.hpp" />
+    <ClInclude Include="utils\fft_convolution.hpp" />
+    <ClInclude Include="utils\naive_convolution.hpp" />
     <ClInclude Include="pvc\convolutionbased.hpp" />
     <ClInclude Include="fvc\convolutionbased.hpp" />
     <ClInclude Include="fvc\kjgraph.hpp" />
