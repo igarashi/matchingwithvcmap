@@ -6,6 +6,8 @@ namespace fvc
 {
 	std::vector<int> ConvolutionBased::get_matches(const std::vector<int>& text, const std::vector<int>& pattern) const
 	{
+		const int M = pattern.size() - 1;
+
 		auto pi_occ = std::map<int, int>();
 		auto sigma_occ = std::map<int, int>();
 
@@ -29,7 +31,6 @@ namespace fvc
 		}
 
 		auto text_powed = utils::alphabet::pow_elements(text);
-
 
 		auto pi_lhs = std::vector<std::vector<int>>(pi_occ.size());
 		auto pi_rhs = std::vector<std::vector<int>>(pi_occ.size());
@@ -79,7 +80,9 @@ namespace fvc
 				j = 0;
 				for (auto s : sigma_occ)
 				{
-					if (s.second * sigma_lhs[j][i] != pow(sigma_rhs[j][i], 2))
+					auto symbol = sigma_rhs[j][i] / s.second;
+					if (s.second * sigma_lhs[j][i] != pow(sigma_rhs[j][i], 2) ||
+						(sigma_rhs[j][i] / s.second) != s.first)
 					{
 						failed = true;
 						break;
@@ -89,7 +92,7 @@ namespace fvc
 
 				if (!failed)
 				{
-					result.push_back(i);
+					result.push_back(i + M);
 				}
 			}
 		}

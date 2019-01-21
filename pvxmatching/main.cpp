@@ -54,19 +54,6 @@ void test_fvcmatching()
 	}
 
 	if (naive_pos != conv_pos) {
-
-		for (auto x : naive_pos)
-		{
-			std::cout << x << " ";
-		}
-		std::cout << std::endl;
-
-		for (auto x : conv_pos)
-		{
-			std::cout << x << " ";
-		}
-		std::cout << std::endl;
-
 		std::cout << "error in ConvBase!";
 	}
 }
@@ -78,7 +65,8 @@ void test_pvcmatching()
 
 	auto pvckmp = pvc::KmpBased(pattern_int);
 
-	auto pvc_conv = pvc::ConvolutionBased(std::shared_ptr<utils::NaiveConvolution>());
+	auto conv = std::make_shared<utils::NaiveConvolution>();
+	auto pvc_conv = pvc::ConvolutionBased(conv);
 	auto conv_pos = std::set<int>();
 	for (auto match : pvc_conv.get_matches(text_int, pattern_int))
 	{
@@ -117,8 +105,9 @@ void test_pvcmatching()
 }
 
 int main() {
-	// test_pvcmatching();
+	std::cout << "Testing PVC matching:" << std::endl;
+	test_pvcmatching();
+	std::cout << "Testing FVC matching:" << std::endl;
 	test_fvcmatching();
-
 	return 0;
 }
