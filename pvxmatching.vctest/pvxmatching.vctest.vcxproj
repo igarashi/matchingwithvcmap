@@ -97,7 +97,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>fvc/kjgraph.obj;fvc/kmpbased.obj;fvc/kshiftingcondition.obj;pvc/kjgraph.obj;pvc/kmpbased.obj;pvc/kshiftingcondition.obj;utils/rbitmap.obj;utils/sbitmap.obj;utils/tbitmap.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>fvc/kjgraph.obj;fvc/kmpbased.obj;fvc/kshiftingcondition.obj;fvc/convolutionbased.obj;pvc/kjgraph.obj;pvc/kmpbased.obj;pvc/kshiftingcondition.obj;pvc/convolutionbased.obj;utils/rbitmap.obj;utils/sbitmap.obj;utils/tbitmap.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)pvxmatching\$(IntermediateOutputPath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>

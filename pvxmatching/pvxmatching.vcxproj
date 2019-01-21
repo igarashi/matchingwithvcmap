@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="pvc\convolutionbased.cpp" />
+    <ClCompile Include="fvc\convolutionbased.cpp" />
     <ClCompile Include="fvc\kjgraph.cpp" />
     <ClCompile Include="fvc\kmpbased.cpp" />
     <ClCompile Include="fvc\kshiftingcondition.cpp" />
@@ -31,6 +33,8 @@
     <ClCompile Include="utils\tbitmap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="pvc\convolutionbased.hpp" />
+    <ClInclude Include="fvc\convolutionbased.hpp" />
     <ClInclude Include="fvc\kjgraph.hpp" />
     <ClInclude Include="fvc\kmpbased.hpp" />
     <ClInclude Include="fvc\kshiftingcondition.hpp" />

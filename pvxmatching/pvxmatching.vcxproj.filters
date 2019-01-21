@@ -69,6 +69,12 @@
     <ClCompile Include="fvc\kshiftingcondition.cpp">
       <Filter>ソース ファイル\fvc</Filter>
     </ClCompile>
+    <ClCompile Include="pvc\convolutionbased.cpp">
+      <Filter>ソース ファイル\pvc</Filter>
+    </ClCompile>
+    <ClCompile Include="fvc\convolutionbased.cpp">
+      <Filter>ソース ファイル\fvc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fvc\kmpbased.hpp">
@@ -118,6 +124,12 @@
     </ClInclude>
     <ClInclude Include="utils\tbitmap.hpp">
       <Filter>ヘッダー ファイル\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="fvc\convolutionbased.hpp">
+      <Filter>ヘッダー ファイル\fvc</Filter>
+    </ClInclude>
+    <ClInclude Include="pvc\convolutionbased.hpp">
+      <Filter>ヘッダー ファイル\pvc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
