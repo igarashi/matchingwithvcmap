@@ -16,7 +16,7 @@
 namespace utils {
 	namespace alphabet {
 
-		std::mt19937 random_generator(time(NULL));
+		static std::mt19937 random_generator(time(NULL));
 
 		inline bool is_variable(const char& c) {
 			return ('A' <= c && c <= 'Z');
