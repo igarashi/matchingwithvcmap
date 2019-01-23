@@ -64,7 +64,7 @@ void test_convbased_pvc(int n_case, int text_length, int pattern_length,
 
         BEGIN_PERF
             for (int i = 0; i < text.length(); i++) {
-                auto naive_match = naive::fvc_matching::match(text_int, pattern_int, i);
+                auto naive_match = naive::pvc_matching::match(text_int, pattern_int, i);
                 if (naive_match) naive_count++;
             }
         END_PERF(naive_time)
@@ -72,7 +72,7 @@ void test_convbased_pvc(int n_case, int text_length, int pattern_length,
         delete pvc_conv;
 
         if (conv_count != naive_count) {
-            std::cerr << "[*] Detect conv_count != naive_count" << std::endl;
+            std::cerr << "\n[*] Detect conv_count != naive_count" << std::endl;
         }
 
         match_count.push_back(naive_count);
@@ -119,7 +119,7 @@ void test_convbased_fvc(int n_case, int text_length, int pattern_length,
         delete fvc_conv;
 
         if (conv_count != naive_count) {
-            std::cerr << "[*] Detect conv_count != naive_count" << std::endl;
+            std::cerr << "\n[*] Detect conv_count != naive_count" << std::endl;
         }
 
         match_count.push_back(naive_count);
@@ -170,7 +170,7 @@ void test_kmpbased_fvc(int n_case, int text_length, int pattern_length,
     delete fvckmp;
 
     if (kmp_count != naive_count) {
-      std::cerr << "[*] Detect kmp_count != naive_count" << std::endl;
+      std::cerr << "\n[*] Detect kmp_count != naive_count" << std::endl;
     }
 
     match_count.push_back(naive_count);
@@ -222,7 +222,7 @@ void test_kmpbased_pvc(int n_case, int text_length, int pattern_length,
     delete pvckmp;
 
     if (kmp_count != naive_count) {
-      std::cerr << "[*] Detect kmp_count != naive_count" << std::endl;
+      std::cerr << "\n[*] Detect kmp_count != naive_count" << std::endl;
     }
 
     match_count.push_back(naive_count);

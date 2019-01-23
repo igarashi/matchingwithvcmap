@@ -5,6 +5,7 @@
 #ifndef PVXMATCHING_ALPHABET_HPP
 #define PVXMATCHING_ALPHABET_HPP
 
+#include <ctime>
 #include <vector>
 #include <map>
 
@@ -14,6 +15,8 @@
 
 namespace utils {
 	namespace alphabet {
+
+		std::mt19937 random_generator(time(NULL));
 
 		inline bool is_variable(const char& c) {
 			return ('A' <= c && c <= 'Z');
@@ -32,20 +35,17 @@ namespace utils {
 		}
 
 		inline std::string generate_test_constant_string(int length, int alphabetSize) {
-			std::random_device rnd;
 			std::stringstream ss;
 			for (auto n = 0; n < length; n++) {
-				auto value = rnd() % alphabetSize;
+				auto value = random_generator() % alphabetSize;
 				ss << char('a' + value);
 			}
 			return ss.str();
 		}
-
 		inline std::string generate_test_variable_string(int length, int alphabetSize) {
-			std::random_device rnd;
 			std::stringstream ss;
 			for (auto n = 0; n < length; n++) {
-				auto value = rnd() % alphabetSize;
+				auto value = random_generator() % alphabetSize;
 				ss << char('A' + value);
 			}
 			return ss.str();
@@ -53,12 +53,11 @@ namespace utils {
 
 		inline std::string generate_test_string(int length, int alphabetSize,
 			unsigned int variableRatio) {
-			std::random_device rnd;
 			std::stringstream ss;
 			variableRatio++;
 			for (auto n = 0; n < length; n++) {
-				auto is_variable = (rnd() % variableRatio) != 0;
-				auto value = rnd() % alphabetSize;
+				auto is_variable = (random_generator() % variableRatio) != 0;
+				auto value = random_generator() % alphabetSize;
 				if (is_variable)
 					ss << char('A' + value);
 				else
