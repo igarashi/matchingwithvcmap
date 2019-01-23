@@ -32,11 +32,11 @@ namespace fvc
 
 		auto text_powed = utils::alphabet::pow_elements(text);
 
-		auto pi_lhs = std::vector<std::vector<int>>(pi_occ.size());
-		auto pi_rhs = std::vector<std::vector<int>>(pi_occ.size());
+		auto pi_lhs = std::vector<std::vector<unsigned long long int>>(pi_occ.size());
+		auto pi_rhs = std::vector<std::vector<unsigned long long int>>(pi_occ.size());
 
-		auto sigma_lhs = std::vector<std::vector<int>>(sigma_occ.size());
-		auto sigma_rhs = std::vector<std::vector<int>>(sigma_occ.size());
+		auto sigma_lhs = std::vector<std::vector<unsigned long long int>>(sigma_occ.size());
+		auto sigma_rhs = std::vector<std::vector<unsigned long long int>>(sigma_occ.size());
 
 		// for checking function match
 		int i = 0;

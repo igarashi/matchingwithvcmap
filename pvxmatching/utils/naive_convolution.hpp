@@ -11,10 +11,10 @@ namespace utils
 
 	public:
 
-		virtual std::vector<int> calculate(const std::vector<int>& a, const std::vector<int>& b) const
+		std::vector<unsigned long long int> calculate(const std::vector<int>& a, const std::vector<int>& b) const override
 		{
 			const auto conv_length = int(a.size()) - b.size() + 1;
-			auto result = std::vector<int>(conv_length);
+			auto result = std::vector<unsigned long long int>(conv_length);
 
 			const auto b_size = b.size();
 

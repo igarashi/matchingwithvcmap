@@ -10,7 +10,7 @@ namespace utils
 
 	public:
 
-		virtual std::vector<int> calculate(const std::vector<int>& a, const std::vector<int>& b) const = 0;
+		virtual std::vector<unsigned long long int> calculate(const std::vector<int>& a, const std::vector<int>& b) const = 0;
 
 	};
 

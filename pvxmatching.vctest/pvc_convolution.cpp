@@ -7,6 +7,7 @@
 #include "../pvxmatching/utils/string.hpp"
 #include "../pvxmatching/utils/naive_convolution.hpp"
 #include <set>
+#include "../pvxmatching/utils/fft_convolution.hpp"
 
 
 #define N_TEST_CASE 1000
@@ -17,7 +18,7 @@ namespace pvcmacthing_test {
 	TEST_CLASS(convolution_test) {
 
 		static void test_impl(int n_case, int text_length, int pattern_length,
-			int text_alphabet_size, int pattern_alphabet_size, int variable_ratio) {
+			int text_alphabet_size, int pattern_alphabet_size, int variable_ratio, int conv_method) {
 			try {
 				int count = 0;
 
@@ -28,7 +29,22 @@ namespace pvcmacthing_test {
 					auto text_int = utils::alphabet::text_variable_int_reduction(text);
 					auto pattern_int = utils::alphabet::text_variable_int_reduction(pattern);
 
-					auto conv = std::make_shared<utils::NaiveConvolution>();
+					std::shared_ptr<utils::ConvolutionBase> conv;
+					switch (conv_method)
+					{
+					case 0:
+						conv = std::make_shared<utils::NaiveConvolution>();
+						break;
+					case 1:
+						conv = std::make_shared<utils::FFTConvolution>(true);
+						break;
+					case 2:
+						conv = std::make_shared<utils::FFTConvolution>(true);
+						break;
+					default:
+						Assert::Fail(L"Invalid arg");
+					}
+
 					auto pvc_conv = pvc::ConvolutionBased(conv);
 
 					auto conv_matches = std::set<int>();
@@ -66,15 +82,21 @@ namespace pvcmacthing_test {
 public:
 
 	TEST_METHOD(pvc_convolution) {
-		test_impl(N_TEST_CASE, 1000, 5, 13, 3, 1);
+		test_impl(N_TEST_CASE, 1000, 5, 13, 3, 1, 0);
+		test_impl(N_TEST_CASE, 1000, 5, 13, 3, 1, 1);
+		test_impl(N_TEST_CASE, 1000, 5, 13, 3, 1, 2);
 	}
 
 	TEST_METHOD(pvc_convolution_manyvariable) {
-		test_impl(N_TEST_CASE, 1000, 10, 5, 5, 5);
+		test_impl(N_TEST_CASE, 1000, 10, 5, 5, 5, 0);
+		test_impl(N_TEST_CASE, 1000, 10, 5, 5, 5, 1);
+		test_impl(N_TEST_CASE, 1000, 10, 5, 5, 5, 2);
 	}
 
 	TEST_METHOD(pvc_convolution_longpattern) {
-		test_impl(N_TEST_CASE, 1000, 10, 5, 5, 1);
+		test_impl(N_TEST_CASE, 1000, 10, 5, 5, 1, 0);
+		test_impl(N_TEST_CASE, 1000, 10, 5, 5, 1, 1);
+		test_impl(N_TEST_CASE, 1000, 10, 5, 5, 1, 2);
 	}
 	};
 }
