@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <ccomplex>
 #include <fftw3.h>
+#include <cstring>
 
 const double EPS = 0.5;
 
