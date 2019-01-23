@@ -13,7 +13,7 @@ find_library(libpvx NAMES libpvxmatching.a PATHS ${CMAKE_SOURCE_DIR}/../pvxmatch
 target_link_libraries(${PROJECT_NAME} ${libpvx})
 
 # include_directories(${CMAKE_SOURCE_DIR}/../fftw/includes)
-find_library(${FFTW} NAMES fftw3)
+find_library(FFTW NAMES fftw3)
 if (NOT FFTW)
     link_directories(${CMAKE_SOURCE_DIR}/../fftw/libs)
     find_library(FFTW NAMES libfftw3-3.dll PATHS ${CMAKE_SOURCE_DIR}/../fftw/libs/)
