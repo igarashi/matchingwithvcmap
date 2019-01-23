@@ -5,7 +5,6 @@ set(CMAKE_BUILD_TYPE RelWithDebInfo)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 include_directories(${CMAKE_SOURCE_DIR}/../fftw/includes)
-link_directories(${CMAKE_SOURCE_DIR}/../fftw/libs)
 
 set(SOURCE_FILES main.cpp
         fvc/kjgraph.cpp fvc/kjgraph.hpp fvc/kmpbased.cpp fvc/kmpbased.hpp fvc/kshiftingcondition.cpp fvc/kshiftingcondition.hpp
