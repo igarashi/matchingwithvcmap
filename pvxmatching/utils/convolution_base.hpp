@@ -3,16 +3,15 @@
 
 #include <vector>
 
-namespace utils
-{
-	class ConvolutionBase
-	{
+namespace utils {
+    class ConvolutionBase {
 
-	public:
+    public:
 
-		virtual std::vector<unsigned long long int> calculate(const std::vector<int>& a, const std::vector<int>& b) const = 0;
+        virtual std::vector<unsigned long long int>
+        calculate(const std::vector<int> &a, const std::vector<int> &b) const = 0;
 
-	};
+    };
 
 }
 
