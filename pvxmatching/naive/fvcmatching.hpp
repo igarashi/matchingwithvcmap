@@ -2,8 +2,8 @@
 // Created by igarashi on 5/23/2017.
 //
 
-#ifndef PVXMATCHING_FVCMATCHING_HPP
-#define PVXMATCHING_FVCMATCHING_HPP
+#ifndef PVXMATCHING_NAIVE_FVCMATCHING_HPP
+#define PVXMATCHING_NAIVE_FVCMATCHING_HPP
 
 #include <string>
 #include <map>
@@ -11,7 +11,8 @@
 
 namespace naive {
 namespace fvc_matching {
-bool match(const std::vector<int> text, const std::vector<int> pattern, int i) {
+
+inline bool match(const std::vector<int> text, const std::vector<int> pattern, int i) {
   if (text.size() < (i + pattern.size()))
     return false;
 

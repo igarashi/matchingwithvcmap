@@ -31,6 +31,7 @@
     <ClCompile Include="utils\rbitmap.cpp" />
     <ClCompile Include="utils\sbitmap.cpp" />
     <ClCompile Include="utils\tbitmap.cpp" />
+    <ClCompile Include="utils\fft_convolution.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils\convolution_base.hpp" />

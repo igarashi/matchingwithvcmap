@@ -75,6 +75,9 @@
     <ClCompile Include="fvc\convolutionbased.cpp">
       <Filter>ソース ファイル\fvc</Filter>
     </ClCompile>
+    <ClCompile Include="utils\fft_convolution.cpp">
+      <Filter>ソース ファイル\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fvc\kmpbased.hpp">

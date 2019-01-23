@@ -1,5 +1,6 @@
 #ifndef PVXMATCHING_CONVOLUTIONBASE_HPP
 #define PVXMATCHING_CONVOLUTIONBASE_HPP
+
 #include <vector>
 
 namespace utils
@@ -14,6 +15,5 @@ namespace utils
 	};
 
 }
-
 
 #endif

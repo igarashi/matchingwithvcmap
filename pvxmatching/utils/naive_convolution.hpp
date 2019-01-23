@@ -1,5 +1,6 @@
 #ifndef PVXMATCHING_NAIVE_CONVOLUTION_HPP
 #define PVXMATCHING_NAIVE_CONVOLUTION_HPP
+
 #include <vector>
 #include "convolution_base.hpp"
 
