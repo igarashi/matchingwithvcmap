@@ -8,3 +8,5 @@ cmake-build-debug/
 !.idea/codeStyleSettings.xml
 pvxperf
 exp_result/
+*.exe
+*.dll

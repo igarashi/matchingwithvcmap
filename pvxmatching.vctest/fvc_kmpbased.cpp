@@ -12,6 +12,7 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace fvcmacthing_test {
+
 	TEST_CLASS(kmpbased_test) {
 
 		static void test_impl(int n_case, int text_length, int pattern_length,

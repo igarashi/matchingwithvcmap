@@ -97,8 +97,8 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>fvc/kjgraph.obj;fvc/kmpbased.obj;fvc/kshiftingcondition.obj;pvc/kjgraph.obj;pvc/kmpbased.obj;pvc/kshiftingcondition.obj;utils/rbitmap.obj;utils/sbitmap.obj;utils/tbitmap.obj;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)pvxmatching\$(IntermediateOutputPath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fvc/kjgraph.obj;fvc/kmpbased.obj;fvc/kshiftingcondition.obj;fvc/convolutionbased.obj;utils/fft_convolution.obj;pvc/kjgraph.obj;pvc/kmpbased.obj;pvc/kshiftingcondition.obj;pvc/convolutionbased.obj;utils/rbitmap.obj;utils/sbitmap.obj;utils/tbitmap.obj;libfftw3-3.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)pvxmatching\$(IntermediateOutputPath);$(SolutionDir)fftw\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -143,8 +143,8 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)pvxmatching\$(IntermediateOutputPath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>fvc/kjgraph.obj;fvc/kmpbased.obj;fvc/kshiftingcondition.obj;pvc/kjgraph.obj;pvc/kmpbased.obj;pvc/kshiftingcondition.obj;utils/rbitmap.obj;utils/sbitmap.obj;utils/tbitmap.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)pvxmatching\$(IntermediateOutputPath);$(SolutionDir)fftw\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fvc/kjgraph.obj;fvc/kmpbased.obj;fvc/kshiftingcondition.obj;fvc/convolutionbased.obj;utils/fft_convolution.obj;pvc/kjgraph.obj;pvc/kmpbased.obj;pvc/kshiftingcondition.obj;pvc/convolutionbased.obj;utils/rbitmap.obj;utils/sbitmap.obj;utils/tbitmap.obj;libfftw3-3.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -152,7 +152,9 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="fvc_convolution.cpp" />
     <ClCompile Include="fvc_kmpbased.cpp" />
+    <ClCompile Include="pvc_convolution.cpp" />
     <ClCompile Include="pvc_kmpbased.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

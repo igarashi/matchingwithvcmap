@@ -2,8 +2,8 @@
 // Created by igarashi on 5/24/2017.
 //
 
-#ifndef PVXMATCHING_PVCMATCHING_HPP
-#define PVXMATCHING_PVCMATCHING_HPP
+#ifndef PVXMATCHING_NAIVE_PVCMATCHING_HPP
+#define PVXMATCHING_NAIVE_PVCMATCHING_HPP
 
 #include <string>
 #include <map>
@@ -13,7 +13,7 @@
 namespace naive {
 namespace pvc_matching {
 
-bool match(const std::vector<int> text, const std::vector<int> pattern, int i) {
+inline bool match(const std::vector<int> text, const std::vector<int> pattern, int i) {
   if (text.size() < (i + pattern.size()))
     return false;
 
